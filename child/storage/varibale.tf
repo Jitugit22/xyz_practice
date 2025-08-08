@@ -1,6 +1,6 @@
 variable "resource_group_name" {
   type        = string
-  default     = "stg"
+  default     = "ATOZ-ResourceGroup"
 }
 
 variable "location" {
