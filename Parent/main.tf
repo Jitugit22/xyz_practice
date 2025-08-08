@@ -39,3 +39,11 @@ module "sql_database" {
   depends_on = [module.rg, module.sql_server]
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "shiva-rg"
+    storage_account_name = "shivastgaccount"
+    container_name       = "shivacontainer"
+    key                  = "shiva.tfstate"
+  }
+}
