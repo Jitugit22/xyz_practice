@@ -41,9 +41,9 @@ module "sql_database" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name  = "shiva-rg"
-    storage_account_name = "shivastgaccount"
-    container_name       = "shivacontainer"
+    resource_group_name  = "Donot_delete"
+    storage_account_name = "shivajitustorage"
+    container_name       = "shivacontainer1"
     key                  = "shiva.tfstate"
   }
 }
