@@ -61,6 +61,6 @@ resource "azurerm_network_interface_security_group_association" "jituns_associat
 }
  data "azurerm_network_security_group" "nsgdata" {
   name                = "nsgmonday"
-  resource_group_name = "Donot_delete1"
+  resource_group_name = "jitu-rg1"
 }
 

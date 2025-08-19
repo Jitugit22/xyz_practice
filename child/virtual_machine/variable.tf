@@ -5,7 +5,7 @@ variable "virtual_network_name" {
 
 variable "resource_group_name" {
   type = string
-  default = "Donot_delete1"
+  default = "jitu-rg1"
 }
 
 variable "location" {  
