@@ -17,35 +17,39 @@ parameters:
     type: boolean
     default: false
 
+variables:
+    workingdir: '$(System.DefaultWorkingDirectory)/Parent'
+    backend: 'Jitu SCN'
+
 steps:
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
-  condition: eq('${{parameters.runinit}}',true)
+  condition: eq(${{parameters.runinit}},true)
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Parent'
-    backendServiceArm: 'Jitu SCN'
+    workingDirectory: $(workingdir)
+    backendServiceArm: $(backend)
     backendAzureRmStorageAccountName: 'shivajitustorage1'
     backendAzureRmContainerName: 'shivacontainer1'
     backendAzureRmKey: 'shiva.tfstate'
 
 - task: TerraformTask@5
-  condition: eq('${{parameters.runplan}}',true)
+  condition: eq(${{parameters.runplan}},true)
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Parent'
-    environmentServiceNameAzureRM: 'Jitu SCN'
+    workingDirectory: $(workingdir)
+    environmentServiceNameAzureRM: $(backend)
 
 - task: TerraformTask@5
-  condition: eq('${{parameters.runapply}}',true)
+  condition: eq(${{parameters.runapply}},true)
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Parent'
+    workingDirectory: $(workingdir)
     commandOptions: '--auto-approve'
-    environmentServiceNameAzureRM: 'Jitu SCN'
+    environmentServiceNameAzureRM: $(backend)
