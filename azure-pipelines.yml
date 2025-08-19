@@ -26,7 +26,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/xyz_practice/Parent'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Parent'
     backendServiceArm: 'Jitu SCN'
     backendAzureRmStorageAccountName: 'shivajitustorage1'
     backendAzureRmContainerName: 'shivacontainer1'
@@ -36,7 +36,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/xyz_practice/Parent'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Parent'
     environmentServiceNameAzureRM: 'Jitu SCN'
 
 
