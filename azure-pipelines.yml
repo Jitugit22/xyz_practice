@@ -28,6 +28,7 @@ steps:
 
 - task: TerraformTask@5
   condition: eq(${{parameters.runinit}},true)
+  displayName: init
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -37,8 +38,20 @@ steps:
     backendAzureRmContainerName: 'shivacontainer1'
     backendAzureRmKey: 'shiva.tfstate'
 
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+    architecture: 'x64'
+
+- script: |
+    pip install checkov
+    checkov -d $(workingdir)
+  displayName: "Run Checkov Security Scan"
+
 - task: TerraformTask@5
   condition: eq(${{parameters.runplan}},true)
+  displayName: plan
   inputs:
     provider: 'azurerm'
     command: 'plan'
@@ -47,6 +60,7 @@ steps:
 
 - task: TerraformTask@5
   condition: eq(${{parameters.runapply}},true)
+  displayName: apply
   inputs:
     provider: 'azurerm'
     command: 'apply'
