@@ -4,12 +4,26 @@ trigger: none
 pool:
  name: jitu agent
 
+parameters:
+  - name: runinit
+    type: boolean
+    default: true
+
+  - name: runplan
+    type: boolean
+    default: true
+
+  - name: runapply
+    type: boolean
+    default: false
+
 steps:
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
+  condition: eq('${{parameters.runinit}}',true)
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -18,10 +32,20 @@ steps:
     backendAzureRmStorageAccountName: 'shivajitustorage1'
     backendAzureRmContainerName: 'shivacontainer1'
     backendAzureRmKey: 'shiva.tfstate'
+
 - task: TerraformTask@5
+  condition: eq('${{parameters.runplan}}',true)
   inputs:
     provider: 'azurerm'
-    command: 'destroy'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Parent'
+    environmentServiceNameAzureRM: 'Jitu SCN'
+
+- task: TerraformTask@5
+  condition: eq('${{parameters.runapply}}',true)
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Parent'
     commandOptions: '--auto-approve'
     environmentServiceNameAzureRM: 'Jitu SCN'
