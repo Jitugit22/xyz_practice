@@ -64,3 +64,4 @@ resource "azurerm_network_interface_security_group_association" "jituns_associat
   resource_group_name = "jitu-rg1"
 }
 
+
