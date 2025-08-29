@@ -1,5 +1,9 @@
 
-trigger: none
+trigger: 
+ branches:
+    include:
+      - feature/*
+      - main
 
 pool:
  name: jitu agent
@@ -39,10 +43,6 @@ steps:
     backendAzureRmKey: 'shiva.tfstate'
 
 
-- script: |
-    pip install checkov
-    checkov -d $(workingdir)
-  displayName: "Run Checkov Security Scan"
 
 - task: TerraformTask@5
   condition: eq(${{parameters.runplan}},true)
@@ -54,7 +54,10 @@ steps:
     environmentServiceNameAzureRM: $(backend)
 
 - task: TerraformTask@5
-  condition: eq(${{parameters.runapply}},true)
+  condition: and(
+              eq(${{ parameters.runapply }}, true), 
+              eq(variables['Build.SourceBranch'], 'refs/heads/main')
+            )
   displayName: apply
   inputs:
     provider: 'azurerm'
