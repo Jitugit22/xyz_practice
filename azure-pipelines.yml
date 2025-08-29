@@ -1,9 +1,9 @@
 
-trigger: 
- branches:
-    include:
-      - feature/*
-      - main
+trigger: none
+#  branches:
+#     include:
+#       - feature/*
+#       - main
 
 pool:
  name: jitu agent
